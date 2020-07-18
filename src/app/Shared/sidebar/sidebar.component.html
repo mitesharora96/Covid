@@ -1,0 +1,44 @@
+
+<mat-sidenav-container class="example-container">
+    <mat-sidenav mode="side"  opened class="Navigation">
+
+        <div class="logo">
+                <mat-icon>blur_circular</mat-icon>
+                Covid 19  India
+        </div>
+        
+        <div>
+            <mat-nav-list>
+                <mat-list-item>
+                    <mat-icon>home</mat-icon>
+                   <a matLine routerLink="home">Home</a>
+                  <!-- <button mat-icon-button (click)="showInfo(link)"> -->
+                      
+                   <!--  </button> -->
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon>text_snippet</mat-icon>
+                    <a matLine href="#">Blog</a>
+                   <!-- <button mat-icon-button (click)="showInfo(link)"> -->
+                      
+                    <!--  </button> -->
+                 </mat-list-item>
+                 <mat-list-item>
+                    <mat-icon>insert_emoticonme</mat-icon>
+                    <a matLine routerLink="about">About</a>
+                   <!-- <button mat-icon-button (click)="showInfo(link)"> -->
+                       
+                    <!--  </button> -->
+                 </mat-list-item>
+              </mat-nav-list>
+        </div>
+
+
+    </mat-sidenav>
+
+
+
+    <mat-sidenav-content class="MainContent" >
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
