@@ -16,6 +16,8 @@
               [rowData]="StateData['statewise']"
               [columnDefs]="columnDefs"
               [animateRows]="true"
+              [masterDetail]="true"
+              [detailCellRendererParams]="detailCellRendererParams"   
               (gridReady)="OnGridReady($event)"
              >
             </ag-grid-angular>

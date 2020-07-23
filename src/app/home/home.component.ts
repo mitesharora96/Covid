@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CovidDataService} from '../covid-data.service'
 
+
 export interface RowData{
   state:string;
   confirmed:string;
@@ -22,22 +23,43 @@ export class HomeComponent implements OnInit {
   StateData:any;
   rowData:RowData[]=[];
   Searchvalue:string;
+  temp="Andaman and Nicobar Islands"
   gridAPI:any;
-  constructor(private db:CovidDataService) { }
+  detailCellRendererParams:any;
+  constructor(private db:CovidDataService) {
+    this.detailCellRendererParams = {
+      detailGridOptions: {
+        columnDefs: [
+          { field: 'statecode' },
+          // { field: 'deltaconfirmed' },
+          // { field: 'active'},
+          // { field: 'recovered'},
+          // { field: 'deceased'},
+        ],
+        
+      },
+      getDetailRowData: function(params) {
+        console.log(params.data.state);
+        params.successCallback(this.DistrictData[params.data.state]);
+      },
+    };
+   }
 
   columnDefs = [
-    {headerName: 'State', field: 'state', sortable: true},
+    {headerName: 'State', field: 'state', sortable: true,cellRenderer: 'agGroupCellRenderer' },
     {headerName: 'Confirmed', field: 'confirmed', sortable: true},
     {headerName: 'Active', field: 'active', sortable: true},
     {headerName: 'Recovered', field: 'recovered', sortable: true},
     {headerName: 'Deceased', field: 'deaths', sortable: true}
 ];
 
+
+
   ngOnInit(): void {
 
     this.db.getDistrictData().subscribe(
       (data)=> {this.DistrictData=data;
-      console.log(this.DistrictData["State Unassigned"].statecode)
+      console.log(this.DistrictData[this.temp].districtData)
       }
     )
 
@@ -46,6 +68,8 @@ export class HomeComponent implements OnInit {
         }
     )
   }
+  
+  
 
   OnGridReady(parsar){
     this.gridAPI=parsar.api;
