@@ -1,28 +1,85 @@
-<p>home works!</p>
-<div class="container">
+<div class="fluid-container">
     <div class="row">
-        <div class="col-sm-12">
-            <mat-form-field class="inp">
-                <mat-label>Search</mat-label>
-                <input matInput type="text" [(ngModel)]="Searchvalue" (keyup)="quickSearch()">
-                <button mat-button *ngIf="Searchvalue" matSuffix mat-icon-button aria-label="Clear" (click)="Searchvalue=''">
-                  <mat-icon>close</mat-icon>
-                </button>
-              </mat-form-field>
+        <div class="col-sm-6">
 
-            <ag-grid-angular
-              style="width: 1100px; height: 1700px; padding: 1px;"
-              class="ag-theme-alpine"
-              [rowData]="this.DistrictData"
-              [columnDefs]="columnDefs"
-              [animateRows]="true"
-              [autoGroupColumnDef]="autoGroupColumnDef"
-              [enableRangeSelection]="true"
-              [groupHideOpenParents]="true"
-              (gridReady)="OnGridReady($event)"
+
+          <div class="SearchBox" style="margin-top: 35px; margin-left: 60px;">
+            <mat-form-field class="inp">
+              <mat-label>Search your state or district</mat-label>
+              <input matInput type="text" [(ngModel)]="Searchvalue" (keyup)="quickSearch()">
+              <button mat-button *ngIf="Searchvalue" matSuffix mat-icon-button aria-label="Clear" (click)="Searchvalue=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+
+          </div>
+
+        <div class="Count-card" style="padding:25px;margin-bottom: 5px;">  
+
+          <div class="card-deck" >
+               <div class="card text-danger confirmed" style="width: 15rem;">
+                  <div class="card-body">
+                   <h4 class="card-title">Confirmed</h4>
               
-             >
-            </ag-grid-angular>
+                    <h2 class="card-text"> {{confirmedCases}}</h2>
+              
+                  </div>
+                </div>
+                  
+                <div class="card text-primary active" style="width: 15rem;">
+                  <div class="card-body">
+                   <h4 class="card-title">Active</h4>
+              
+                    <h2 class="card-text"> {{activeCases}}</h2>
+              
+                  </div>
+                </div>
+
+                <div class="card text-success recovered" style="width: 15rem;">
+                  <div class="card-body">
+                   <h4 class="card-title">Recovered</h4>
+              
+                    <h2 class="card-text"> {{recoveredCases}}</h2>
+              
+                  </div>
+                </div>
+
+                <div class="card text-secondary deceased" style="width: 15rem;">
+                  <div class="card-body">
+                   <h4 class="card-title">Deceased</h4>
+              
+                    <h2 class="card-text"> {{deceasedCases}}</h2>
+              
+                  </div>
+                </div>
+                </div>
+        </div>
+
+
+            <div class="Cases-table">
+
+                <ag-grid-angular
+                  
+                  class="ag-theme-alpine"
+                  [rowData]="this.DistrictData"
+                  [columnDefs]="columnDefs"
+                  [animateRows]="true"
+                  [autoGroupColumnDef]="autoGroupColumnDef"
+                  [enableRangeSelection]="true"
+                  [groupHideOpenParents]="true"
+                  [domLayout]="domLayout"
+                  [getRowHeight]="getRowHeight"
+                  (gridReady)="OnGridReady($event)"
+                >
+               </ag-grid-angular>
+            </div>
+
+        </div>
+
+        <div class="col-sm-6">
+
+          Hello
+
         </div>
 
         

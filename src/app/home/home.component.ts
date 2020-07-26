@@ -2,13 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CovidDataService} from '../covid-data.service'
 import {  map } from 'rxjs/operators';
 
-export interface RowData{
-  state:string;
-  confirmed:string;
-  active:string;
-  recovered:string;
-  deaths:string
-}
+
 
 @Component({
   selector: 'app-home',
@@ -19,17 +13,22 @@ export interface RowData{
 
 export class HomeComponent implements OnInit {
 
+  activeCases:any;
+  confirmedCases:any;
+  recoveredCases:any;
+  deceasedCases:any;
   DistrictData:any;
   StateData:any;
-  rowData:RowData[]=[];
   StateKeys:any;
   districtKeys:any;
   Searchvalue:string;
   gridColumnApi:any;
-  temp="Andaman and Nicobar Islands"
+  domLayout:any;
+  getRowHeight:any; 
   gridAPI:any;
   autoGroupColumnDef:any;
   detailCellRendererParams:any;
+  
   NewData=[];
   columnDefs:any;
   constructor(private db:CovidDataService) {
@@ -41,16 +40,17 @@ export class HomeComponent implements OnInit {
         sortable: true,
         hide: true,
       },
-      { field: 'districtname', headerName:"District"  },
-      {headerName: 'Confirmed', field: 'confirmed',aggFunc: 'sum',sortable: true},
-    {headerName: 'Active', field: 'active',aggFunc: 'sum',sortable: true},
-    {headerName: 'Recovered', field: 'recovered',aggFunc: 'sum',sortable: true},
-    {headerName: 'Deceased', field: 'deceased',aggFunc: 'sum',sortable: true}
+      { field: 'districtname', headerName:"District",width: 100,sortable: true },
+      {headerName: 'C', field: 'confirmed',aggFunc: 'sum',sortable: true,width: 97},
+    {headerName: 'A', field: 'active',aggFunc: 'sum',sortable: true,width: 97},
+    {headerName: 'R', field: 'recovered',aggFunc: 'sum',sortable: true,width: 97},
+    {headerName: 'D', field: 'deceased',aggFunc: 'sum',sortable: true,width: 97}
     ];
     
-    
+    this.domLayout='autoHeight';
+    this.getRowHeight=100;
     this.autoGroupColumnDef = {
-      minWidth: 200,
+      minWidth: 150,
       filterValueGetter: function(params) {
         var colGettingGrouped = params.colDef.showRowGroup;
         var valueForOtherCol = params.api.getValue(
@@ -63,24 +63,18 @@ export class HomeComponent implements OnInit {
 
    }
 
-  
-
-
-
   ngOnInit(): void {
 
     this.db.getDistrictData().pipe(map(data=>{
       this.StateKeys=Object.keys(data);
-      this.districtKeys=Object.keys(data[this.StateKeys[1]].districtData)
       
-        console.log(this.StateKeys.length);
       
       let k=0;
-      for(let i=0;i<this.StateKeys.length;i++)
+      for(let i=1;i<this.StateKeys.length;i++)
       {
         this.districtKeys=Object.keys(data[this.StateKeys[i]].districtData)
         
-        for(let j=0;j<this.districtKeys.length;j++)
+        for(let j=1;j<this.districtKeys.length;j++)
         {
           data[this.StateKeys[i]].districtData[this.districtKeys[j]]['statename']=this.StateKeys[i];
           data[this.StateKeys[i]].districtData[this.districtKeys[j]]['districtname']=this.districtKeys[j];
@@ -88,17 +82,17 @@ export class HomeComponent implements OnInit {
               k++;
         }
       }
-      console.log(this.StateKeys[1]);
-      console.log(data[this.StateKeys[1]].districtData);
       return this.NewData
     })).subscribe(
-      (data)=> {this.DistrictData=data;
-      
-      }
+      (data)=> {this.DistrictData=data;}
     )
 
     this.db.getStatewiseData().pipe(map(data=>{ return data['statewise']})).subscribe(
-      data=>{this.StateData=data;      
+      data=>{this.StateData=data; 
+        this.activeCases=this.StateData[0].active ;
+        this.confirmedCases=this.StateData[0].confirmed;
+        this.deceasedCases=this.StateData[0].deaths;
+        this.recoveredCases=this.StateData[0].recovered;    
         }
     )
   }
