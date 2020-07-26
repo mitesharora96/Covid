@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CovidDataService} from '../covid-data.service'
-
+import {  map } from 'rxjs/operators';
 
 export interface RowData{
   state:string;
@@ -22,48 +22,82 @@ export class HomeComponent implements OnInit {
   DistrictData:any;
   StateData:any;
   rowData:RowData[]=[];
+  StateKeys:any;
+  districtKeys:any;
   Searchvalue:string;
+  gridColumnApi:any;
   temp="Andaman and Nicobar Islands"
   gridAPI:any;
+  autoGroupColumnDef:any;
   detailCellRendererParams:any;
+  NewData=[];
+  columnDefs:any;
   constructor(private db:CovidDataService) {
-    this.detailCellRendererParams = {
-      detailGridOptions: {
-        columnDefs: [
-          { field: 'statecode' },
-          // { field: 'deltaconfirmed' },
-          // { field: 'active'},
-          // { field: 'recovered'},
-          // { field: 'deceased'},
-        ],
-        
+    this.columnDefs = [
+      {
+        field: 'statename',
+        headerName:"State",
+        rowGroup: true,
+        sortable: true,
+        hide: true,
       },
-      getDetailRowData: function(params) {
-        console.log(params.data.state);
-        params.successCallback(this.DistrictData[params.data.state]);
+      { field: 'districtname', headerName:"District"  },
+      {headerName: 'Confirmed', field: 'confirmed',aggFunc: 'sum',sortable: true},
+    {headerName: 'Active', field: 'active',aggFunc: 'sum',sortable: true},
+    {headerName: 'Recovered', field: 'recovered',aggFunc: 'sum',sortable: true},
+    {headerName: 'Deceased', field: 'deceased',aggFunc: 'sum',sortable: true}
+    ];
+    
+    
+    this.autoGroupColumnDef = {
+      minWidth: 200,
+      filterValueGetter: function(params) {
+        var colGettingGrouped = params.colDef.showRowGroup;
+        var valueForOtherCol = params.api.getValue(
+          colGettingGrouped,
+          params.node
+        );
+        return valueForOtherCol;
       },
     };
+
    }
 
-  columnDefs = [
-    {headerName: 'State', field: 'state', sortable: true,cellRenderer: 'agGroupCellRenderer' },
-    {headerName: 'Confirmed', field: 'confirmed', sortable: true},
-    {headerName: 'Active', field: 'active', sortable: true},
-    {headerName: 'Recovered', field: 'recovered', sortable: true},
-    {headerName: 'Deceased', field: 'deaths', sortable: true}
-];
+  
 
 
 
   ngOnInit(): void {
 
-    this.db.getDistrictData().subscribe(
+    this.db.getDistrictData().pipe(map(data=>{
+      this.StateKeys=Object.keys(data);
+      this.districtKeys=Object.keys(data[this.StateKeys[1]].districtData)
+      
+        console.log(this.StateKeys.length);
+      
+      let k=0;
+      for(let i=0;i<this.StateKeys.length;i++)
+      {
+        this.districtKeys=Object.keys(data[this.StateKeys[i]].districtData)
+        
+        for(let j=0;j<this.districtKeys.length;j++)
+        {
+          data[this.StateKeys[i]].districtData[this.districtKeys[j]]['statename']=this.StateKeys[i];
+          data[this.StateKeys[i]].districtData[this.districtKeys[j]]['districtname']=this.districtKeys[j];
+          this.NewData[k]=(data[this.StateKeys[i]].districtData[this.districtKeys[j]]);
+              k++;
+        }
+      }
+      console.log(this.StateKeys[1]);
+      console.log(data[this.StateKeys[1]].districtData);
+      return this.NewData
+    })).subscribe(
       (data)=> {this.DistrictData=data;
-      console.log(this.DistrictData[this.temp].districtData)
+      
       }
     )
 
-    this.db.getStatewiseData().subscribe(
+    this.db.getStatewiseData().pipe(map(data=>{ return data['statewise']})).subscribe(
       data=>{this.StateData=data;      
         }
     )
@@ -73,6 +107,7 @@ export class HomeComponent implements OnInit {
 
   OnGridReady(parsar){
     this.gridAPI=parsar.api;
+    this.gridColumnApi = parsar.columnApi;
   }
 
   quickSearch(){

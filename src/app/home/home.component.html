@@ -13,12 +13,14 @@
             <ag-grid-angular
               style="width: 1100px; height: 1700px; padding: 1px;"
               class="ag-theme-alpine"
-              [rowData]="StateData['statewise']"
+              [rowData]="this.DistrictData"
               [columnDefs]="columnDefs"
               [animateRows]="true"
-              [masterDetail]="true"
-              [detailCellRendererParams]="detailCellRendererParams"   
+              [autoGroupColumnDef]="autoGroupColumnDef"
+              [enableRangeSelection]="true"
+              [groupHideOpenParents]="true"
               (gridReady)="OnGridReady($event)"
+              
              >
             </ag-grid-angular>
         </div>
