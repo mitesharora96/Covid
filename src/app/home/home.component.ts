@@ -8,6 +8,7 @@ export interface RowData{
   active:string;
   recovered:string;
   deaths:string
+
 }
 
 @Component({
@@ -18,6 +19,7 @@ export interface RowData{
 
 
 export class HomeComponent implements OnInit {
+
 
   DistrictData:any;
   StateData:any;
@@ -67,7 +69,9 @@ export class HomeComponent implements OnInit {
 
 
 
+
   ngOnInit(): void {
+
 
     this.db.getDistrictData().pipe(map(data=>{
       this.StateKeys=Object.keys(data);
@@ -100,17 +104,18 @@ export class HomeComponent implements OnInit {
     this.db.getStatewiseData().pipe(map(data=>{ return data['statewise']})).subscribe(
       data=>{this.StateData=data;      
         }
+
     )
   }
-  
-  
+
 
   OnGridReady(parsar){
     this.gridAPI=parsar.api;
     this.gridColumnApi = parsar.columnApi;
+
   }
 
-  quickSearch(){
+  quickSearch() {
     this.gridAPI.setQuickFilter(this.Searchvalue);
   }
 }
