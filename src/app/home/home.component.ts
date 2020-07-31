@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CovidDataService} from '../covid-data.service'
 import {  map } from 'rxjs/operators';
+import {CellRendererComponent} from '../cell-renderer/cell-renderer.component';
 
 
 
@@ -35,10 +36,11 @@ export class HomeComponent implements OnInit {
     this.columnDefs = [
       {
         field: 'statename',
-        headerName:"State",
+        headerName:"State/UT",
         rowGroup: true,
         sortable: true,
         hide: true,
+        cellRendererFramework:CellRendererComponent
       },
       { field: 'districtname', headerName:"District",width: 100,sortable: true },
       {headerName: 'C', field: 'confirmed',aggFunc: 'sum',sortable: true,width: 97},
@@ -65,25 +67,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.db.getDistrictData().pipe(map(data=>{
-      this.StateKeys=Object.keys(data);
-      
-      
-      let k=0;
-      for(let i=1;i<this.StateKeys.length;i++)
-      {
-        this.districtKeys=Object.keys(data[this.StateKeys[i]].districtData)
-        
-        for(let j=1;j<this.districtKeys.length;j++)
-        {
-          data[this.StateKeys[i]].districtData[this.districtKeys[j]]['statename']=this.StateKeys[i];
-          data[this.StateKeys[i]].districtData[this.districtKeys[j]]['districtname']=this.districtKeys[j];
-          this.NewData[k]=(data[this.StateKeys[i]].districtData[this.districtKeys[j]]);
-              k++;
-        }
-      }
-      return this.NewData
-    })).subscribe(
+    this.db.getDistrictData().subscribe(
       (data)=> {this.DistrictData=data;}
     )
 

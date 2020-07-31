@@ -1,11 +1,13 @@
+
+
 <div class="fluid-container">
     <div class="row">
         <div class="col-sm-6">
 
-
+            <h1 class="header">{{State}}</h1>
           <div class="SearchBox" style="margin-top: 35px; margin-left: 60px;">
             <mat-form-field class="inp">
-              <mat-label>Search your state or district</mat-label>
+              <mat-label>Search your  district</mat-label>
               <input matInput type="text" [(ngModel)]="Searchvalue" (keyup)="quickSearch()">
               <button mat-button *ngIf="Searchvalue" matSuffix mat-icon-button aria-label="Clear" (click)="Searchvalue=''">
                 <mat-icon>close</mat-icon>
@@ -64,11 +66,7 @@
                   [rowData]="DistrictData"
                   [columnDefs]="columnDefs"
                   [animateRows]="true"
-                  [autoGroupColumnDef]="autoGroupColumnDef"
-                  [enableRangeSelection]="true"
-                  [groupHideOpenParents]="true"
                   [domLayout]="domLayout"
-                  [getRowHeight]="getRowHeight"
                   (gridReady)="OnGridReady($event)"
                 >
                </ag-grid-angular>
