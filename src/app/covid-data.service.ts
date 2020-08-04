@@ -41,4 +41,9 @@ export class CovidDataService {
     return this.http.get("https://api.covid19india.org/data.json")
   
   }
+
+  getDailyPatientCount():Observable<any>{
+    return this.http.get("https://api.covid19india.org/states_daily.json")
+  
+  }
 }

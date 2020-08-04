@@ -1,0 +1,28 @@
+
+
+<h2 class="text-secondary">Spread Trends</h2>
+<mat-button-toggle-group (click)="OnClick(group.value)" #group="matButtonToggleGroup" value="Daily">
+    <mat-button-toggle value="Daily" aria-label="Text align left">
+      Daily
+    </mat-button-toggle>
+    <mat-button-toggle value="Cumalative" aria-label="Text align center">
+      Cumalative
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+  
+
+
+
+<div class="confirmed" > 
+<p-chart type="line" [data]="ConfirmedData" ></p-chart>
+</div>
+<br><br>
+
+<div class="recovered">
+<p-chart  type="line" [data]="RecoveredData" ></p-chart>
+</div>
+<br><br>
+
+<div class="deceased">
+<p-chart  type="line" [data]="DeathData" ></p-chart>
+</div>
