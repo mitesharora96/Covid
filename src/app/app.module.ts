@@ -25,6 +25,8 @@ import { AboutComponent } from './about/about.component';
 import { CellRendererComponent } from './cell-renderer/cell-renderer.component';
 import { StateDetailsComponent } from './state-details/state-details.component';
 import { AnalyticsComponent } from './home/analytics/analytics.component';
+import { BlogComponent } from './blog/blog.component';
+
 
 @NgModule({
   declarations: [
@@ -37,6 +39,9 @@ import { AnalyticsComponent } from './home/analytics/analytics.component';
     CellRendererComponent,
     StateDetailsComponent,
     AnalyticsComponent
+
+    BlogComponent
+
   ],
   imports: [
     BrowserModule,
