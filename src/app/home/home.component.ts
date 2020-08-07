@@ -14,10 +14,12 @@ import {CellRendererComponent} from '../cell-renderer/cell-renderer.component';
 
 export class HomeComponent implements OnInit {
 
+
   activeCases:any;
   confirmedCases:any;
   recoveredCases:any;
   deceasedCases:any;
+
   DistrictData:any;
   StateData:any;
   StateKeys:any;
@@ -65,7 +67,9 @@ export class HomeComponent implements OnInit {
 
    }
 
+
   ngOnInit(): void {
+
 
     this.db.getDistrictData().subscribe(
       (data)=> {this.DistrictData=data;}
@@ -78,17 +82,18 @@ export class HomeComponent implements OnInit {
         this.deceasedCases=this.StateData[0].deaths;
         this.recoveredCases=this.StateData[0].recovered;    
         }
+
     )
   }
-  
-  
+
 
   OnGridReady(parsar){
     this.gridAPI=parsar.api;
     this.gridColumnApi = parsar.columnApi;
+
   }
 
-  quickSearch(){
+  quickSearch() {
     this.gridAPI.setQuickFilter(this.Searchvalue);
   }
 }

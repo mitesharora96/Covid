@@ -5,6 +5,7 @@
 
           <div class="SearchBox" style="margin-top: 35px; margin-left: 60px;">
             <mat-form-field class="inp">
+
               <mat-label>Search your state or district</mat-label>
               <input matInput type="text" [(ngModel)]="Searchvalue" (keyup)="quickSearch()">
               <button mat-button *ngIf="Searchvalue" matSuffix mat-icon-button aria-label="Clear" (click)="Searchvalue=''">
@@ -81,6 +82,7 @@
           <h1 class="text-secondary">India</h1>
 
           <app-analytics></app-analytics>
+
 
         </div>
 
