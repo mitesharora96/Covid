@@ -19,8 +19,12 @@ import { SidebarComponent } from './Shared/sidebar/sidebar.component';
 import { FooterComponent } from './Shared/footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
+
 import { CellRendererComponent } from './cell-renderer/cell-renderer.component';
 import { StateDetailsComponent } from './state-details/state-details.component';
+
+import { BlogComponent } from './blog/blog.component';
+
 
 @NgModule({
   declarations: [
@@ -32,6 +36,8 @@ import { StateDetailsComponent } from './state-details/state-details.component';
     AboutComponent,
     CellRendererComponent,
     StateDetailsComponent
+    BlogComponent
+
   ],
   imports: [
     BrowserModule,
