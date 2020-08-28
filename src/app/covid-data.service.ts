@@ -28,6 +28,7 @@ export class CovidDataService {
       {
         data[this.StateKeys[i]].districtData[this.districtKeys[j]]['statename']=this.StateKeys[i];
         data[this.StateKeys[i]].districtData[this.districtKeys[j]]['districtname']=this.districtKeys[j];
+        data[this.StateKeys[i]].districtData[this.districtKeys[j]]['statecode']=data[this.StateKeys[i]].statecode;
         this.NewData[k]=(data[this.StateKeys[i]].districtData[this.districtKeys[j]]);
             k++;
       }
@@ -39,6 +40,11 @@ export class CovidDataService {
 
   getStatewiseData():Observable<any>{
     return this.http.get("https://api.covid19india.org/data.json")
+  
+  }
+
+  getDailyPatientCount():Observable<any>{
+    return this.http.get("https://api.covid19india.org/states_daily.json")
   
   }
 }
