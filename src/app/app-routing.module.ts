@@ -2,7 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
+
 import {StateDetailsComponent} from './state-details/state-details.component'
+import { BlogComponent } from './blog/blog.component';
+
+
 import { BlogComponent } from './blog/blog.component';
 
 
