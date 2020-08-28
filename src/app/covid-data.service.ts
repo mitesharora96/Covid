@@ -28,6 +28,7 @@ export class CovidDataService {
       {
         data[this.StateKeys[i]].districtData[this.districtKeys[j]]['statename']=this.StateKeys[i];
         data[this.StateKeys[i]].districtData[this.districtKeys[j]]['districtname']=this.districtKeys[j];
+        data[this.StateKeys[i]].districtData[this.districtKeys[j]]['statecode']=data[this.StateKeys[i]].statecode;
         this.NewData[k]=(data[this.StateKeys[i]].districtData[this.districtKeys[j]]);
             k++;
       }

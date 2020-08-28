@@ -91,7 +91,7 @@ datasets: [
 ]
 }
 
-return true;
+
 
 }
 
@@ -106,6 +106,7 @@ return true;
         for(let i=0;i<this.DailyCounts.length;i++){
           if(this.DailyCounts[i].status=='Confirmed')
           {
+              
               this.ConfirmedDailyCounts[a]=this.DailyCounts[i].tt; 
               this.ConfirmedDates[a]=this.DailyCounts[i].date;
               if(a>0)
