@@ -28,6 +28,9 @@ import { AnalyticsComponent } from './home/analytics/analytics.component';
 import { BlogComponent } from './blog/blog.component';
 
 
+import { BlogComponent } from './blog/blog.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
