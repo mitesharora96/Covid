@@ -1,12 +1,13 @@
+
+
 <div class="fluid-container">
     <div class="row">
         <div class="col-sm-6">
 
-
+            <h1 class="header">{{State}}</h1>
           <div class="SearchBox" style="margin-top: 35px; margin-left: 60px;">
             <mat-form-field class="inp">
-
-              <mat-label>Search your state or district</mat-label>
+              <mat-label>Search your  district</mat-label>
               <input matInput type="text" [(ngModel)]="Searchvalue" (keyup)="quickSearch()">
               <button mat-button *ngIf="Searchvalue" matSuffix mat-icon-button aria-label="Clear" (click)="Searchvalue=''">
                 <mat-icon>close</mat-icon>
@@ -22,7 +23,7 @@
                   <div class="card-body">
                    <h4 class="card-title">Confirmed</h4>
               
-                    <h2 class="card-text"> {{confirmedCases}}</h2>
+                    <h2 class="card-text ml-2"> {{confirmedCases}}</h2>
               
                   </div>
                 </div>
@@ -31,7 +32,7 @@
                   <div class="card-body">
                    <h4 class="card-title">Active</h4>
               
-                    <h2 class="card-text"> {{activeCases}}</h2>
+                    <h2 class="card-text ml-2"> {{activeCases}}</h2>
               
                   </div>
                 </div>
@@ -40,7 +41,7 @@
                   <div class="card-body">
                    <h4 class="card-title">Recovered</h4>
               
-                    <h2 class="card-text"> {{recoveredCases}}</h2>
+                    <h2 class="card-text ml-2"> {{recoveredCases}}</h2>
               
                   </div>
                 </div>
@@ -49,7 +50,7 @@
                   <div class="card-body">
                    <h4 class="card-title">Deceased</h4>
               
-                    <h2 class="card-text"> {{deceasedCases}}</h2>
+                    <h2 class="card-text ml-2"> {{deceasedCases}}</h2>
               
                   </div>
                 </div>
@@ -65,11 +66,7 @@
                   [rowData]="DistrictData"
                   [columnDefs]="columnDefs"
                   [animateRows]="true"
-                  [autoGroupColumnDef]="autoGroupColumnDef"
-                  [enableRangeSelection]="true"
-                  [groupHideOpenParents]="true"
                   [domLayout]="domLayout"
-                  [getRowHeight]="getRowHeight"
                   (gridReady)="OnGridReady($event)"
                 >
                </ag-grid-angular>
@@ -79,10 +76,32 @@
 
         <div class="col-sm-6">
 
-          <h1 class="text-secondary">India</h1>
+          <h2 class="text-secondary head">Spread Trends</h2>
+              <mat-button-toggle-group (click)="OnClick(group.value)" #group="matButtonToggleGroup" value="Daily">
+               <mat-button-toggle value="Daily" aria-label="Text align left">
+                   Daily
+               </mat-button-toggle>
+              <mat-button-toggle value="Cumalative" aria-label="Text align center">
+                 Cumalative
+              </mat-button-toggle>
+              </mat-button-toggle-group>
+  
 
-          <app-analytics></app-analytics>
 
+
+            <div class="confirm" > 
+            <p-chart type="line" [data]="ConfirmedData" ></p-chart>
+            </div>
+            <br><br>
+
+            <div class="recover">
+                <p-chart  type="line" [data]="RecoveredData" ></p-chart>
+            </div>
+            <br><br>
+
+            <div class="decease">
+                <p-chart  type="line" [data]="DeathData" ></p-chart>
+            </div>
 
         </div>
 
